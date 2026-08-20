@@ -1,9 +1,5 @@
 name,email,age,city,salary
-Ahmad,ahmad@gmail.com,23,Islamabad,85000
-Ali,unknown,25,Rawalpindi,70000
-Sara,sara@gmail.com,26,Lahore,90000
-Bilal,bilal@gmail.com,31,Karachi,77500
-Zain,unknown,28,unknown,75000
-Hassan,hassan@gmail.com,22,Peshawar,65000
-Ayesha,unknown,26,Islamabad,77500
-Omar,omar@gmail.com,26,Karachi,80000
+Ali,ali@gmail.com,25,Lahore,75000
+John,john@gmail.com,99,unknown,9000000
+Ayesha,ayesha@gmail.com,0,Peshawar,0
+Omar,omar@gmail.com,35,Quetta,0

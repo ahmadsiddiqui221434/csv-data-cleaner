@@ -1,5 +1,6 @@
 name,email,age,city,salary
 Ali,ali@gmail.com,25,Lahore,75000
+Ali,,25,Lahore,75000
 John,john@gmail.com,99,,9000000
 Ayesha,ayesha@gmail.com,,Peshawar,
 Omar,omar@gmail.com,35,Quetta,

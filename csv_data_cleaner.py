@@ -14,7 +14,7 @@ def load_csv(file_path):
     return df
 
 
-def clean_data(df):
+def clean_data(df, fill_method="median"):
     # Count duplicate rows before removing them
     duplicate_count = df.duplicated().sum()
 
@@ -29,11 +29,14 @@ def clean_data(df):
         
         # Check whether the column contains numeric data
         if pd.api.types.is_numeric_dtype(df[column]):
-            # Calculate the median and round it to the nearest whole number
-            median_val = round(df[column].median())
             
-            # Fill missing numeric values with the rounded median
-            df[column] = df[column].fillna(median_val)
+            if fill_method == "zero":
+                # Fill missing numeric values with 0
+                df[column] = df[column].fillna(0)
+            else:
+                # Default: Calculate the median and round it to the nearest whole number
+                median_val = round(df[column].median())
+                df[column] = df[column].fillna(median_val)
             
             # Force the column back to integer type to remove decimals
             df[column] = df[column].astype(int)
@@ -51,7 +54,8 @@ def clean_data(df):
         "rows_after": int(len(df)),
         "duplicates_removed": int(duplicate_count),
         "missing_values_before": int(missing_before),
-        "missing_values_after": int(missing_after)
+        "missing_values_after": int(missing_after),
+        "numeric_fill_method": fill_method
     }
 
     # Return cleaned DataFrame and report
@@ -72,17 +76,31 @@ def save_outputs(df, report):
 
 
 def main():
+    # Ask the user for their preferred filling method in the terminal
+    print("Choose how to handle missing numeric values:")
+    print("1. Median (Recommended)")
+    print("2. Zero")
+    
+    choice = input("Enter 1 or 2 (or press Enter for default Median): ").strip()
+    
+    if choice == "2":
+        fill_method = "zero"
+        print("-> Selected method: Filling missing numbers with 0")
+    else:
+        fill_method = "median"
+        print("-> Selected method: Filling missing numbers with Median")
+
     # Load the input CSV
     df = load_csv(INPUT_FILE)
 
-    # Clean the data and generate the quality report
-    cleaned_df, report = clean_data(df)
+    # Clean the data using the user's chosen method and generate the quality report
+    cleaned_df, report = clean_data(df, fill_method=fill_method)
 
     # Save both outputs
     save_outputs(cleaned_df, report)
 
     # Display completion message
-    print("Data cleaning completed.")
+    print("\nData cleaning completed.")
     print(f"Cleaned file: {OUTPUT_FILE}")
     print(f"Report file: {REPORT_FILE}")
 
